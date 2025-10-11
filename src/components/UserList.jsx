@@ -10,31 +10,39 @@ import {
   Avatar,
   Typography,
 } from "antd";
-
 import {
   EditOutlined,
   DeleteOutlined,
   TableOutlined,
   UnorderedListOutlined,
-  AppstoreOutlined,
 } from "@ant-design/icons";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsersRequest } from "../redux/users/userSlice";
 
 const { Search } = Input;
 const { Text } = Typography;
 
 function UserList() {
+  const dispatch = useDispatch();
+  const { list, loading, pagination } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(fetchUsersRequest(1));
+  }, [dispatch]);
+
   const columns = [
     {
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: (text) => <Avatar src={text} size={40} />,
+      render: (url) => <Avatar src={url} size={40} />,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text) => <a href={`mailto:${text}`}>{text}</a>,
+      render: (email) => <a href={`mailto:${email}`}>{email}</a>,
     },
     {
       title: "First Name",
@@ -49,7 +57,7 @@ function UserList() {
     {
       title: "Action",
       key: "action",
-      render: (_, record) => (
+      render: () => (
         <Space>
           <Button type="primary" size="middle" icon={<EditOutlined />}>
             Edit
@@ -62,29 +70,9 @@ function UserList() {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      email: "george.bluth@reqres.in",
-      first_name: "George",
-      last_name: "Bluth",
-      avatar: "https://reqres.in/img/faces/1-image.jpg",
-    },
-    {
-      key: "2",
-      email: "janet.weaver@reqres.in",
-      first_name: "Janet",
-      last_name: "Weaver",
-      avatar: "https://reqres.in/img/faces/2-image.jpg",
-    },
-    {
-      key: "3",
-      email: "emma.wong@reqres.in",
-      first_name: "Emma",
-      last_name: "Wong",
-      avatar: "https://reqres.in/img/faces/3-image.jpg",
-    },
-  ];
+  const handleChange = (paginationInfo) => {
+    dispatch(fetchUsersRequest(paginationInfo.current));
+  };
 
   return (
     <Card
@@ -100,7 +88,7 @@ function UserList() {
         <Col>
           <Space>
             <Search
-              placeholder="Search"
+              placeholder="Search users..."
               allowClear
               enterButton
               style={{
@@ -130,7 +118,7 @@ function UserList() {
             label: (
               <Space align="center" size={6}>
                 <UnorderedListOutlined />
-                <Text strong>Cards</Text>
+                <Text strong>Card</Text>
               </Space>
             ),
           },
@@ -139,13 +127,18 @@ function UserList() {
 
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={list}
+        loading={loading}
         pagination={{
-          pageSize: 10,
+          ...pagination,
           position: ["bottomCenter"],
           showSizeChanger: false,
         }}
+        onChange={handleChange}
+        rowKey="id"
         bordered={false}
+        locale={{ emptyText: loading ? "Loading..." : "No users found" }}
+        style={{ marginTop: 16 }}
       />
     </Card>
   );

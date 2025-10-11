@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { loginApi } from "../../api/authApi";
-import { loginRequest, loginSuccess, loginFailure } from "./authSlice";
+import { loginApi, logoutApi } from "../../api/authApi";
+import { loginRequest, loginSuccess, loginFailure, logout } from "./authSlice";
 
 function* handleLogin(action) {
   try {
@@ -14,6 +14,16 @@ function* handleLogin(action) {
   }
 }
 
+function* handleLogout() {
+  try {
+    yield call(logoutApi);
+    localStorage.removeItem("token");
+  } catch (error) {
+    yield put(logout(error));
+  }
+}
+
 export default function* authSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
+  yield takeLatest(logout.type, handleLogout);
 }
