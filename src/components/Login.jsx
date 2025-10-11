@@ -1,11 +1,18 @@
-import { Input, Form, Button, Card, Typography, Flex, Checkbox } from "antd";
+import {
+  Input,
+  Form,
+  Button,
+  Card,
+  Typography,
+  Flex,
+  Checkbox,
+  message,
+} from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../redux/auth/authSlice.jsx";
 import { useNavigate } from "react-router-dom";
-
-const { Title } = Typography;
 
 function Login() {
   const userRef = useRef(null);
@@ -14,9 +21,24 @@ function Login() {
 
   const { loading, token, error } = useSelector((state) => state.auth);
 
+  const { Title } = Typography;
+  const [messageApi, contextHolder] = message.useMessage();
+
   useEffect(() => {
     userRef.current?.focus();
   }, []);
+  useEffect(() => {
+    if (error) {
+      messageApi.error(error);
+    }
+  }, [error, messageApi]);
+
+  useEffect(() => {
+    if (token) {
+      messageApi.success("Login successful!");
+      navigate("/users");
+    }
+  }, [token, navigate, messageApi]);
 
   useEffect(() => {
     if (token) navigate("/users");
@@ -39,6 +61,7 @@ function Login() {
         backgroundColor: "#f5f5f5",
       }}
     >
+      {contextHolder}
       <Title level={3} style={{ marginBottom: 32 }}>
         Sign in
       </Title>
@@ -98,15 +121,6 @@ function Login() {
             </Button>
           </Form.Item>
         </Form>
-
-        {error && (
-          <Typography.Text
-            type="danger"
-            style={{ display: "block", textAlign: "center", marginTop: 12 }}
-          >
-            {error}
-          </Typography.Text>
-        )}
       </Card>
     </div>
   );

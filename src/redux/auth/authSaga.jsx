@@ -8,7 +8,9 @@ function* handleLogin(action) {
     yield put(loginSuccess(response.data.token));
     localStorage.setItem("token", response.data.token);
   } catch (error) {
-    yield put(loginFailure(error.message));
+    const message =
+      error.response?.data?.error || error.message || "Login Failed";
+    yield put(loginFailure(message));
   }
 }
 
