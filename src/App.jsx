@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
+import Header from "./components/Header";
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import UserList from "./components/UserList";
 
@@ -11,6 +12,7 @@ function App() {
         path="/users"
         element={
           <ProtectedRoute>
+            <Header />
             <UserList />
           </ProtectedRoute>
         }
