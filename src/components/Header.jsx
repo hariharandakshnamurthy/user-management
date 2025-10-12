@@ -1,10 +1,23 @@
-import { Image, Space, Typography, Tooltip, Button } from "antd";
+import { Image, Space, Typography, Tooltip, Button, message } from "antd";
 import { LogoutOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import userLogo from "../assets/group.png";
+import { logout } from "../redux/auth/authSlice";
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { Title } = Typography;
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const handleLogOut = () => {
+    dispatch(logout());
+    navigate("/login");
+    messageApi.success("Logged out successfully");
+  };
 
   return (
     <div
@@ -19,6 +32,7 @@ function Header() {
         backgroundColor: "#fff",
       }}
     >
+      {contextHolder}
       <Space align="center">
         <Image
           src={userLogo}
@@ -41,7 +55,9 @@ function Header() {
         onMouseLeave={(e) => (e.currentTarget.style.color = "red")}
       >
         <Tooltip title="Click to Logout">
-          <Button icon={<LogoutOutlined />}>Log out</Button>
+          <Button icon={<LogoutOutlined />} onClick={handleLogOut}>
+            Log out
+          </Button>
         </Tooltip>
       </div>
     </div>
