@@ -11,8 +11,9 @@ import {
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRequest } from "../redux/auth/authSlice.jsx";
+import { loginRequest } from "../../redux/auth/authSlice.jsx";
 import { useNavigate } from "react-router-dom";
+import "./styles.css";
 
 function Login() {
   const dispatch = useDispatch();
@@ -25,13 +26,13 @@ function Login() {
 
   useEffect(() => {
     if (error) {
-      messageApi.error(error);
+      void messageApi.error(error);
     }
   }, [error, messageApi]);
 
   useEffect(() => {
     if (token) {
-      messageApi.success("Login successful!");
+      void messageApi.success("Login successful!");
       navigate("/users");
     }
   }, [token, navigate, messageApi]);
@@ -41,30 +42,12 @@ function Login() {
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "left",
-        backgroundColor: "#f5f5f5",
-      }}
-    >
+    <div className="login-container">
       {contextHolder}
-      <Title level={3} style={{ marginBottom: 32 }}>
+      <Title level={3} className="login-title">
         Sign in
       </Title>
-      <Card
-        style={{
-          width: 500,
-          padding: "24px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-          borderRadius: "12px",
-        }}
-      >
+      <Card className="login-card">
         <Form
           name="login"
           layout="vertical"
@@ -102,7 +85,7 @@ function Login() {
               type="primary"
               htmlType="submit"
               size="large"
-              style={{ width: "100%" }}
+              className="login-submit-btn"
               loading={loading}
             >
               Sign in
