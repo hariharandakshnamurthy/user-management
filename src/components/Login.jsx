@@ -9,13 +9,12 @@ import {
   message,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../redux/auth/authSlice.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const userRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,9 +23,6 @@ function Login() {
   const { Title } = Typography;
   const [messageApi, contextHolder] = message.useMessage();
 
-  useEffect(() => {
-    userRef.current?.focus();
-  }, []);
   useEffect(() => {
     if (error) {
       messageApi.error(error);
@@ -39,10 +35,6 @@ function Login() {
       navigate("/users");
     }
   }, [token, navigate, messageApi]);
-
-  useEffect(() => {
-    if (token) navigate("/users");
-  }, [token, navigate]);
 
   const handleSubmit = (values) => {
     dispatch(loginRequest(values));
@@ -87,11 +79,7 @@ function Login() {
               { required: true, message: "Email is required" },
             ]}
           >
-            <Input
-              ref={userRef}
-              prefix={<UserOutlined />}
-              placeholder="Email"
-            />
+            <Input autoFocus prefix={<UserOutlined />} placeholder="Email" />
           </Form.Item>
 
           <Form.Item
