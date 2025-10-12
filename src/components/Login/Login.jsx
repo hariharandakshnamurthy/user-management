@@ -7,13 +7,15 @@ import {
   Flex,
   Checkbox,
   message,
+  Image
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../redux/auth/authSlice.jsx";
 import { useNavigate } from "react-router-dom";
-import "./styles.css";
+import logo from "../../assets/group.png";
+import "./Styles.css";
 
 function Login() {
   const dispatch = useDispatch();
@@ -44,6 +46,12 @@ function Login() {
   return (
     <div className="login-container">
       {contextHolder}
+      <div className="login-logo">
+        <Image src={logo} alt="logo" preview={false}/>
+      </div>
+      <Title level={1} className="login-title">
+        User Management
+      </Title>
       <Title level={3} className="login-title">
         Sign in
       </Title>

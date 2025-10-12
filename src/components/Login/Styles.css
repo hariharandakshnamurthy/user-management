@@ -9,6 +9,12 @@
     background-color: #f5f5f5;
 }
 
+.login-logo img {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain;
+}
+
 .login-title {
     margin-bottom: 32px;
 }
