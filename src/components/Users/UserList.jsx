@@ -1,4 +1,4 @@
-import { Card, Tabs, Space, Typography, message } from "antd";
+import { Card, Tabs, Space, Typography, message, Tooltip } from "antd";
 import { TableOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import UserModal from "../UserModal.jsx";
 import UserHeader from "./UserHeader";
 import UserTable from "./UserTable";
 import UserCards from "./UserCards";
-import "./styles.css";
+import "./Styles.css";
 
 const { Text } = Typography;
 
@@ -85,8 +85,10 @@ function UserList() {
             key: "table",
             label: (
               <Space align="center" size={6}>
-                <TableOutlined />
-                <Text strong>Table</Text>
+                <Tooltip title="Click to view users in table">
+                  <TableOutlined />
+                  <Text strong>Table</Text>
+                </Tooltip>
               </Space>
             ),
           },
@@ -94,8 +96,10 @@ function UserList() {
             key: "card",
             label: (
               <Space align="center" size={6}>
-                <AppstoreOutlined />
-                <Text strong>Card</Text>
+                <Tooltip title="Click to view users in cards">
+                  <AppstoreOutlined />
+                  <Text strong>Card</Text>
+                </Tooltip>
               </Space>
             ),
           },

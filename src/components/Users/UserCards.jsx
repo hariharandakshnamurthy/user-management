@@ -2,7 +2,7 @@ import { Row, Col, Avatar, Button, Space, Tooltip, Pagination, Empty, Popconfirm
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import avatar from "../../assets/users.png";
 import Loader from "../Loader.jsx";
-import "./styles.css";
+import "./Styles.css";
 
 function UserCards({ users, loading, pagination, onEdit, onDelete, onPageChange }) {
   if (loading) {
