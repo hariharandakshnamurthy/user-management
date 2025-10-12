@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://reqres.in/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
-    "x-api-key": "reqres-free-v1",
+    "x-api-key": import.meta.env.VITE_API_KEY,
   },
 });
 
