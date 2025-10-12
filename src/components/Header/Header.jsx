@@ -3,8 +3,9 @@ import { LogoutOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import userLogo from "../assets/group.png";
-import { logout } from "../redux/auth/authSlice";
+import userLogo from "../../assets/group.png";
+import { logout } from "../../redux/auth/authSlice";
+import  './Styles.css'
 
 function Header() {
   const dispatch = useDispatch();
@@ -15,22 +16,16 @@ function Header() {
 
   const handleLogOut = () => {
     dispatch(logout());
-    navigate("/login");
-    messageApi.success("Logged out successfully");
+    setTimeout(() => {
+      navigate("/login")
+      localStorage.removeItem("token");
+    },100)
+    void messageApi.success("Logged out successfully");
   };
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100vw",
-        padding: "16px 32px",
-        boxSizing: "border-box",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-        backgroundColor: "#fff",
-      }}
+      className="header"
     >
       {contextHolder}
       <Space align="center">
@@ -38,21 +33,14 @@ function Header() {
           src={userLogo}
           alt="user management logo"
           preview={false}
-          style={{ height: "50px", overflow: "hidden" }}
+          className={"logo"}
         />
-        <Title level={3} style={{ margin: 0 }}>
+        <Title level={3} className={"title"}>
           User Management
         </Title>
       </Space>
       <div
-        style={{
-          cursor: "pointer",
-          fontSize: "20px",
-          color: "red",
-          transition: "color 0.2s",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = "#1677ff")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "red")}
+        className={"logout-button"}
       >
         <Tooltip title="Click to Logout">
           <Button icon={<LogoutOutlined />} onClick={handleLogOut}>

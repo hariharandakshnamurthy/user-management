@@ -1,99 +1,114 @@
+import { Modal, Form, Input } from "antd";
 import { useEffect } from "react";
-import { Modal, Form, Input, Button, message, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserRequest, updateUserRequest } from "../redux/users/userSlice";
 
-const UserModal = ({ visible, onCancel, user, isEdit = false }) => {
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.users);
+function UserModal({ visible, onCancel, user, isEdit }) {
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
+  const dispatch = useDispatch();
+  const { list } = useSelector((state) => state.users);
 
   useEffect(() => {
-    if (visible && isEdit && user) {
-      form.setFieldsValue({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-      });
-    } else if (visible && !isEdit) {
-      form.resetFields();
+    if (visible) {
+      if (isEdit && user) {
+        form.setFieldsValue({
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          avatar: user.avatar,
+        });
+      } else {
+        form.resetFields();
+      }
     }
   }, [visible, isEdit, user, form]);
 
-  useEffect(() => {
-    if (error) messageApi.error(error);
-  }, [error, messageApi]);
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
 
-  const handleSubmit = (values) => {
-    if (isEdit) {
-      dispatch(updateUserRequest({ id: user.id, ...values }));
-      messageApi.success("User updated successfully!");
-    } else {
-      dispatch(createUserRequest(values));
-      messageApi.success("User created successfully!");
+      if (isEdit) {
+        dispatch(updateUserRequest({ ...user, ...values }));
+      } else {
+        dispatch(createUserRequest(values));
+      }
+
+      form.resetFields();
+      onCancel();
+    } catch (error) {
+      console.error("Validation failed:", error);
     }
-    form.resetFields();
-    onCancel();
   };
 
-  const handleCancel = () => {
-    form.resetFields();
-    onCancel();
+  const validateEmail = (_, value) => {
+    if (!value) {
+      return Promise.reject(new Error("Please input the email!"));
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      return Promise.reject(new Error("Please enter a valid email address!"));
+    }
+
+    const createdUsers = JSON.parse(localStorage.getItem("createdUsers") || "[]");
+    const allUsers = [...createdUsers, ...list];
+
+    const duplicateEmail = allUsers.some(
+      (u) =>
+        u.email.toLowerCase() === value.toLowerCase() &&
+        (!isEdit || u.id !== user?.id)
+    );
+
+    if (duplicateEmail) {
+      return Promise.reject(new Error("A user with this email already exists!"));
+    }
+
+    return Promise.resolve();
   };
 
   return (
     <Modal
-      title={isEdit ? "Edit User" : "Create New User"}
+      title={isEdit ? "Edit User" : "Create User"}
       open={visible}
-      onCancel={handleCancel}
-      footer={null}
-      width={500}
+      onOk={handleSubmit}
+      onCancel={() => {
+        form.resetFields();
+        onCancel();
+      }}
+      okText={isEdit ? "Update" : "Create"}
     >
-      {contextHolder}
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleSubmit}
-        autoComplete="off"
-      >
+      <Form form={form} layout="vertical">
         <Form.Item
-          name="first_name"
           label="First Name"
-          rules={[{ required: true, message: "Please enter first name" }]}
+          name="first_name"
+          rules={[{ required: true, message: "Please input the first name!" }]}
         >
           <Input placeholder="Enter first name" />
         </Form.Item>
 
         <Form.Item
-          name="last_name"
           label="Last Name"
-          rules={[{ required: true, message: "Please enter last name" }]}
+          name="last_name"
+          rules={[{ required: true, message: "Please input the last name!" }]}
         >
           <Input placeholder="Enter last name" />
         </Form.Item>
 
         <Form.Item
-          name="email"
           label="Email"
-          rules={[
-            { required: true, type: "email", message: "Enter valid email" },
-          ]}
+          name="email"
+          rules={[{ required: true, validator: validateEmail }]}
+          validateTrigger="onBlur"
         >
-          <Input placeholder="Enter email address" />
+          <Input placeholder="Enter email" type="email" />
         </Form.Item>
 
-        <Form.Item style={{ marginBottom: 0 }}>
-          <Space>
-            <Button onClick={handleCancel}>Cancel</Button>
-            <Button type="primary" htmlType="submit" loading={loading}>
-              {isEdit ? "Update User" : "Create User"}
-            </Button>
-          </Space>
+        <Form.Item label="Avatar URL" name="avatar">
+          <Input placeholder="Enter avatar URL (optional)" />
         </Form.Item>
       </Form>
     </Modal>
   );
-};
+}
 
 export default UserModal;
