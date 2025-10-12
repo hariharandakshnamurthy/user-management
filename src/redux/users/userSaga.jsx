@@ -1,4 +1,4 @@
-import { call, delay, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import {
   fetchUsersApi,
   createUserApi,
@@ -23,26 +23,52 @@ import { message } from "antd";
 
 function* handleFetchUsers(action) {
   try {
-    const response = yield call(fetchUsersApi, action.payload);
-    yield delay(400);
-
     const createdUsers = JSON.parse(localStorage.getItem("createdUsers") || "[]");
+    const deletedUserIds = JSON.parse(localStorage.getItem("deletedUserIds") || "[]");
+    const currentPage = action.payload || 1;
+    const pageSize = 6;
 
-    const mergedData =
-      action.payload === 1
-        ? [...createdUsers, ...response.data.data]
-        : response.data.data;
+    const totalCreatedUsers = createdUsers.length;
 
-    const total =
-      action.payload === 1
-        ? response.data.total + createdUsers.length
-        : response.data.total;
+    const startIndex = (currentPage - 1) * pageSize;
+    const createdUsersOnThisPage = Math.max(0, Math.min(totalCreatedUsers - startIndex, pageSize));
+
+    const firstApiIndexNeeded = Math.max(0, startIndex - totalCreatedUsers);
+    const apiUsersNeeded = pageSize - createdUsersOnThisPage;
+
+    const firstApiPage = Math.floor(firstApiIndexNeeded / pageSize) + 1;
+    const lastApiPage = Math.floor((firstApiIndexNeeded + apiUsersNeeded - 1) / pageSize) + 1;
+
+    let allApiData = [];
+    for (let page = firstApiPage; page <= lastApiPage; page++) {
+      const response = yield call(fetchUsersApi, page);
+      allApiData.push(...response.data.data);
+
+      if (page === firstApiPage) {
+        var totalApiUsers = response.data.total;
+      }
+    }
+
+    const filteredApiData = allApiData.filter(user => !deletedUserIds.includes(user.id));
+    const grandTotal = totalCreatedUsers + totalApiUsers - deletedUserIds.length;
+
+    let mergedData = [];
+
+    if (createdUsersOnThisPage > 0) {
+      const createdSlice = createdUsers.slice(startIndex, startIndex + createdUsersOnThisPage);
+      mergedData.push(...createdSlice);
+    }
+
+    const offsetInFirstApiFetch = firstApiIndexNeeded % pageSize;
+    const apiSlice = filteredApiData.slice(offsetInFirstApiFetch, offsetInFirstApiFetch + apiUsersNeeded);
+    mergedData.push(...apiSlice);
 
     yield put(
       fetchUsersSuccess({
-        ...response.data,
         data: mergedData,
-        total,
+        page: currentPage,
+        per_page: pageSize,
+        total: grandTotal,
       })
     );
   } catch (error) {
@@ -62,10 +88,10 @@ function* handleCreateUser(action) {
     const existingUsers = JSON.parse(localStorage.getItem('createdUsers') || '[]');
     existingUsers.push(response.data);
     localStorage.setItem('createdUsers', JSON.stringify(existingUsers));
-    message.success("User created successfully!");
+    void message.success("User created successfully!");
   } catch (error) {
     yield put(createUserFailure(error.message));
-    message.error("Failed to create user!");
+    void message.error("Failed to create user!");
   }
 }
 
@@ -73,18 +99,36 @@ function* handleUpdateUser(action) {
   try {
     const response = yield call(updateUserApi, action.payload);
     yield put(updateUserSuccess(response.data));
-    message.success("User updated successfully!");
+    void message.success("User updated successfully!");
   } catch (error) {
     yield put(updateUserFailure(error.message));
-    message.error("Failed to update user!");
+    void message.error("Failed to update user!");
   }
 }
 
 function* handleDeleteUser(action) {
   try {
-    yield call(deleteUserApi, action.payload);
-    yield put(deleteUserSuccess(action.payload));
-    message.success("User deleted successfully!");
+    const userId = action.payload;
+
+    const createdUsers = JSON.parse(localStorage.getItem("createdUsers") || "[]");
+    const isCreatedUser = createdUsers.some(user => user.id === userId);
+
+    if (isCreatedUser) {
+      const updatedCreatedUsers = createdUsers.filter(user => user.id !== userId);
+      localStorage.setItem("createdUsers", JSON.stringify(updatedCreatedUsers));
+    } else {
+      const deletedUserIds = JSON.parse(localStorage.getItem("deletedUserIds") || "[]");
+      if (!deletedUserIds.includes(userId)) {
+        deletedUserIds.push(userId);
+        localStorage.setItem("deletedUserIds", JSON.stringify(deletedUserIds));
+      }
+      yield call(deleteUserApi, userId);
+    }
+    yield put(deleteUserSuccess(userId));
+
+    const currentPage = yield select(state => state.users.pagination.current || 1);
+    yield put(fetchUsersRequest(currentPage));
+
   } catch (error) {
     yield put(deleteUserFailure(error.message));
     message.error("Failed to delete user!");

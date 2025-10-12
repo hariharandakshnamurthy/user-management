@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
-import Header from "./components/Header";
+import Header from "./components/Header/Header.jsx";
 import ProtectedRoute from "./routes/ProtectedRoutes";
-import UserList from "./components/UserList";
+import UserList from "./components/Users/UserList.jsx";
 
 function App() {
   return (
