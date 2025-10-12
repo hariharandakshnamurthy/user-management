@@ -1,5 +1,5 @@
 import { Input, Button, Space, Row, Col } from "antd";
-import "./styles.css";
+import "./Styles.css";
 
 const { Search } = Input;
 

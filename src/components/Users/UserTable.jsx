@@ -1,7 +1,7 @@
 import { Table, Button, Space, Avatar, Popconfirm, Pagination, Row, Empty } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import avatar from "../../assets/users.png";
-import "./styles.css";
+import "./Styles.css";
 
 function UserTable({ users, loading, pagination, onEdit, onDelete, onPageChange }) {
   const columns = [
