@@ -1,0 +1,210 @@
+@import './variables';
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-base {
+  background: $white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-card;
+  transition: transform $transition-normal ease, box-shadow $transition-normal ease;
+}
+
+@mixin button-circle($size, $bg-color, $hover-color) {
+  background-color: $bg-color !important;
+  color: $white !important;
+  border: none !important;
+  width: $size !important;
+  height: $size !important;
+
+  &:hover {
+    background-color: $hover-color !important;
+    color: $white !important;
+    border-color: $hover-color !important;
+  }
+}
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  background-color: $bg-light;
+}
+
+.login-logo {
+  img {
+    width: $icon-size-lg !important;
+    height: $icon-size-lg !important;
+    object-fit: contain;
+  }
+}
+
+.login-title {
+  margin-bottom: $spacing-xl;
+}
+
+.login-card {
+  width: 500px;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  border-radius: $radius-lg;
+}
+
+.login-submit-btn {
+  width: 100%;
+}
+
+.demo-tag {
+  color: $success-color;
+  border-color: transparent;
+  font-weight: 500;
+  font-size: 13px;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-sm;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  padding: $spacing-md $spacing-xl;
+  box-sizing: border-box;
+  box-shadow: $shadow-sm;
+  background-color: $white;
+
+  .logo {
+    height: $header-height;
+    overflow: hidden;
+    object-fit: contain;
+  }
+
+  .title {
+    margin: 0;
+  }
+
+  .logout-button {
+    cursor: pointer;
+    font-size: 20px;
+    color: $danger-color;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $primary-color;
+    }
+
+    .ant-btn {
+      color: inherit;
+    }
+  }
+}
+
+.user-card-container {
+  border-radius: $radius-md;
+  box-shadow: $shadow-md;
+}
+
+.user-header-row {
+  margin-bottom: $spacing-md;
+}
+
+.user-header-title {
+  margin: 0;
+}
+
+.user-search-input {
+  width: 300px;
+}
+
+.user-table {
+  margin-top: $spacing-md;
+}
+
+.user-pagination-row {
+  margin-top: $spacing-lg;
+}
+
+.user-cards-row {
+  margin-top: $spacing-md;
+}
+
+// User Card Item
+.user-card-item {
+  @include card-base;
+  position: relative;
+  width: 90%;
+  aspect-ratio: 1 / 1.05;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-card-hover;
+
+    .user-card-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.user-card-content {
+  text-align: center;
+}
+
+.user-card-avatar {
+  margin-bottom: 12px;
+  border: $avatar-border solid $border-light;
+}
+
+.user-card-name {
+  font-weight: 600;
+  margin: 0;
+  font-size: 16px;
+  color: $text-primary;
+}
+
+.user-card-email {
+  color: $text-secondary;
+  font-size: 13px;
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.user-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: $bg-overlay;
+  opacity: 0;
+  visibility: hidden;
+  @include flex-center;
+  transition: opacity $transition-normal ease, visibility $transition-normal ease;
+  border-radius: $radius-md;
+}
+
+.user-card-edit-btn {
+  @include button-circle($icon-size, $edit-color, $primary-hover);
+}
+
+.user-card-delete-btn {
+  @include button-circle($icon-size, $danger-color, $danger-hover);
+}
+
+.user-empty-container {
+  @include flex-center;
+  height: 200px;
+}

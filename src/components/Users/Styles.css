@@ -1,130 +1,130 @@
 
-.user-card-container {
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+/*.user-card-container {*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
 
-.user-header-row {
-    margin-bottom: 16px;
-}
+/*.user-header-row {*/
+/*    margin-bottom: 16px;*/
+/*}*/
 
-.user-header-title {
-    margin: 0;
-}
+/*.user-header-title {*/
+/*    margin: 0;*/
+/*}*/
 
-.user-search-input {
-    width: 300px;
-}
+/*.user-search-input {*/
+/*    width: 300px;*/
+/*}*/
 
-.user-table {
-    margin-top: 16px;
-}
+/*.user-table {*/
+/*    margin-top: 16px;*/
+/*}*/
 
-.user-pagination-row {
-    margin-top: 24px;
-}
+/*.user-pagination-row {*/
+/*    margin-top: 24px;*/
+/*}*/
 
 
-.user-cards-row {
-    margin-top: 16px;
-}
+/*.user-cards-row {*/
+/*    margin-top: 16px;*/
+/*}*/
 
-.user-card-item {
-    position: relative;
-    background: #fff;
-    border-radius: 10px;
-    width: 90%;
-    aspect-ratio: 1 / 1.05;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    cursor: pointer;
-}
+/*.user-card-item {*/
+/*    position: relative;*/
+/*    background: #fff;*/
+/*    border-radius: 10px;*/
+/*    width: 90%;*/
+/*    aspect-ratio: 1 / 1.05;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);*/
+/*    transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+/*    overflow: hidden;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.user-card-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
+/*.user-card-item:hover {*/
+/*    transform: translateY(-4px);*/
+/*    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);*/
+/*}*/
 
-.user-card-content {
-    text-align: center;
-}
+/*.user-card-content {*/
+/*    text-align: center;*/
+/*}*/
 
-.user-card-avatar {
-    margin-bottom: 12px;
-    border: 2px solid #f0f0f0;
-}
+/*.user-card-avatar {*/
+/*    margin-bottom: 12px;*/
+/*    border: 2px solid #f0f0f0;*/
+/*}*/
 
-.user-card-name {
-    font-weight: 600;
-    margin: 0;
-    font-size: 16px;
-    color: #222;
-}
+/*.user-card-name {*/
+/*    font-weight: 600;*/
+/*    margin: 0;*/
+/*    font-size: 16px;*/
+/*    color: #222;*/
+/*}*/
 
-.user-card-email {
-    color: #666;
-    font-size: 13px;
-    margin-top: 6px;
-    margin-bottom: 0;
-}
+/*.user-card-email {*/
+/*    color: #666;*/
+/*    font-size: 13px;*/
+/*    margin-top: 6px;*/
+/*    margin-bottom: 0;*/
+/*}*/
 
-.user-card-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    border-radius: 10px;
-}
+/*.user-card-overlay {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    background: rgba(0, 0, 0, 0.4);*/
+/*    opacity: 0;*/
+/*    visibility: hidden;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    transition: opacity 0.3s ease, visibility 0.3s ease;*/
+/*    border-radius: 10px;*/
+/*}*/
 
-.user-card-item:hover .user-card-overlay {
-    opacity: 1;
-    visibility: visible;
-}
+/*.user-card-item:hover .user-card-overlay {*/
+/*    opacity: 1;*/
+/*    visibility: visible;*/
+/*}*/
 
-.user-card-edit-btn {
-    background-color: #7b7ff7 !important;
-    color: white !important;
-    border: none !important;
-    width: 50px !important;
-    height: 50px !important;
-}
+/*.user-card-edit-btn {*/
+/*    background-color: #7b7ff7 !important;*/
+/*    color: white !important;*/
+/*    border: none !important;*/
+/*    width: 50px !important;*/
+/*    height: 50px !important;*/
+/*}*/
 
-.user-card-edit-btn:hover {
-    background-color: #6366f1 !important;
-    color: white !important;
-    border-color: #6366f1 !important;
-}
+/*.user-card-edit-btn:hover {*/
+/*    background-color: #6366f1 !important;*/
+/*    color: white !important;*/
+/*    border-color: #6366f1 !important;*/
+/*}*/
 
-.user-card-delete-btn {
-    background-color: #ff4d4f !important;
-    color: white !important;
-    border: none !important;
-    width: 50px !important;
-    height: 50px !important;
-}
+/*.user-card-delete-btn {*/
+/*    background-color: #ff4d4f !important;*/
+/*    color: white !important;*/
+/*    border: none !important;*/
+/*    width: 50px !important;*/
+/*    height: 50px !important;*/
+/*}*/
 
-.user-card-delete-btn:hover {
-    background-color: #ff7875 !important;
-    color: white !important;
-    border-color: #ff7875 !important;
-}
+/*.user-card-delete-btn:hover {*/
+/*    background-color: #ff7875 !important;*/
+/*    color: white !important;*/
+/*    border-color: #ff7875 !important;*/
+/*}*/
 
-.user-empty-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-}
+/*.user-empty-container {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    height: 200px;*/
+/*}*/
