@@ -1,8 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login.jsx";
 import Header from "./components/Header/Header.jsx";
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import UserList from "./components/Users/UserList.jsx";
+import { Result } from "antd";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           </ProtectedRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<Result status="404" title="404" subTitle="Page Not Found" />} />
     </Routes>
   );
 }
