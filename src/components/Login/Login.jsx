@@ -7,7 +7,8 @@ import {
   Flex,
   Checkbox,
   message,
-  Image
+  Image,
+  Tag,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
@@ -17,13 +18,14 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/group.png";
 import "./Styles.css";
 
+const { Title,Text } = Typography;
+
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { loading, token, error } = useSelector((state) => state.auth);
 
-  const { Title } = Typography;
   const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
@@ -100,6 +102,16 @@ function Login() {
             </Button>
           </Form.Item>
         </Form>
+        <Tag
+          bordered
+          className={"demo-tag"}
+        >
+          <Text strong>Demo Credentials</Text>
+          <br/>
+         Email: eve.holt@reqres.in
+          <br/>
+          Password: cityslicka
+        </Tag>
       </Card>
     </div>
   );

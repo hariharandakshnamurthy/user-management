@@ -1,0 +1,46 @@
+// Colors
+$primary-color: #1677ff;
+$primary-hover: #6366f1;
+$success-color: #27ae60;
+$danger-color: #ff4d4f;
+$danger-hover: #ff7875;
+$edit-color: #7b7ff7;
+$white: #fff;
+$text-primary: #222;
+$text-secondary: #666;
+$bg-light: #f5f5f5;
+$bg-overlay: rgba(0, 0, 0, 0.4);
+$border-light: #f0f0f0;
+
+// Shadows
+$shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-card: 0 3px 8px rgba(0, 0, 0, 0.08);
+$shadow-card-hover: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+// Border Radius
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 12px;
+$radius-circle: 50%;
+
+// Spacing
+$spacing-xs: 2px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Sizes
+$icon-size: 50px;
+$icon-size-lg: 100px;
+$avatar-border: 2px;
+$header-height: 50px;
+
+// Transitions
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
