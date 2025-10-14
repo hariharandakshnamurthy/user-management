@@ -1,16 +1,80 @@
-# React + Vite
+# User Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite project for user management.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Node.js](https://nodejs.org/) (v18+ recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) or [pnpm](https://pnpm.io/)
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Clone the repository:
+```bash
+git clone https://github.com/hariharandakshnamurthy/user-management.git
+cd user-management
+```
 
-## Expanding the ESLint configuration
+Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+The app will be available at [http://localhost:5173](http://localhost:5173) (or as printed in your terminal).
+
+## Building for Production
+
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+```
+
+## Previewing the Production Build
+
+```bash
+npm run preview
+# or
+yarn preview
+# or
+pnpm preview
+```
+
+## Linting
+
+```bash
+npm run lint
+# or
+yarn lint
+# or
+pnpm lint
+```
+
+## Useful Links
+
+- [Vite Documentation](https://vitejs.dev/)
+- [React Documentation](https://react.dev/)
+- [Reqres.in Documentation]([https://reqres.in](https://reqres.in/api-docs/)
+
+## Troubleshooting
+
+- If you encounter issues with Node.js version, use [nvm](https://github.com/nvm-sh/nvm) to switch versions.
+- If you see "port in use" errors, change the default port or stop other processes using it.
+
+---
+
+For more details on advanced configuration, check the [Vite](https://vitejs.dev/) and [React](https://react.dev/) docs.
