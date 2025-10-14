@@ -50,7 +50,6 @@ function UserList() {
 
   const closeModal = () => {
     setIsModalOpen(false)
-    dispatch(fetchUsersRequest(1));
   };
 
   const handleDelete = (id) => {
