@@ -68,7 +68,7 @@ pnpm lint
 
 - [Vite Documentation](https://vitejs.dev/)
 - [React Documentation](https://react.dev/)
-- [Reqres.in Documentation]([https://reqres.in](https://reqres.in/api-docs/)
+- [Reqres.in Documentation]((https://reqres.in/api-docs/)
 
 ## Troubleshooting
 
