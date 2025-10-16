@@ -11,7 +11,7 @@ import {
   Tag,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../redux/auth/authSlice.jsx";
 import { useNavigate } from "react-router-dom";
@@ -23,10 +23,10 @@ const { Title, Text } = Typography;
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { loading, token, error } = useSelector((state) => state.auth);
-
   const [messageApi, contextHolder] = message.useMessage();
+  const [form] = Form.useForm();
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   const VALIDATION_RULES = {
     email: [
@@ -69,6 +69,20 @@ function Login() {
     dispatch(loginRequest(values));
   };
 
+  const handleUseDemoCredentials = () => {
+    setIsDemoMode(true);
+    form.setFieldsValue(DEMO_CREDENTIALS);
+    form.validateFields();
+  };
+
+  const handleFormChange = () => {
+    const currentValues = form.getFieldsValue();
+    const isDemo =
+      currentValues.email === DEMO_CREDENTIALS.email &&
+      currentValues.password === DEMO_CREDENTIALS.password;
+    setIsDemoMode(isDemo);
+  };
+
   return (
     <div className="login-container">
       {contextHolder}
@@ -83,17 +97,33 @@ function Login() {
       </Title>
       <Card className="login-card">
         <Form
+          form={form}
           name="login"
           layout="vertical"
           size="large"
           onFinish={handleSubmit}
+          onValuesChange={handleFormChange}
           autoComplete="off"
         >
-          <Form.Item name="email" rules={VALIDATION_RULES.email}>
+          <Form.Item
+            name="email"
+            rules={
+              isDemoMode
+                ? [{ required: true, message: "Email is required" }]
+                : VALIDATION_RULES.email
+            }
+          >
             <Input autoFocus prefix={<UserOutlined />} placeholder="Email" />
           </Form.Item>
 
-          <Form.Item name="password" rules={VALIDATION_RULES.password}>
+          <Form.Item
+            name="password"
+            rules={
+              isDemoMode
+                ? [{ required: true, message: "Password is required" }]
+                : VALIDATION_RULES.password
+            }
+          >
             <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
 
@@ -117,12 +147,18 @@ function Login() {
             </Button>
           </Form.Item>
         </Form>
-        <Tag bordered className={"demo-tag"}>
-          <Text strong>Demo Credentials</Text>
+
+        <Tag
+          bordered
+          className={"demo-tag"}
+          style={{ cursor: "pointer" }}
+          onClick={handleUseDemoCredentials}
+        >
+          <Text strong>Demo Credentials (Click to use)</Text>
           <br />
-          Email: {DEMO_CREDENTIALS.email}
+          Email: eve.holt@reqres.in
           <br />
-          Password: {DEMO_CREDENTIALS.password}
+          Password: cityslicka
         </Tag>
       </Card>
     </div>
