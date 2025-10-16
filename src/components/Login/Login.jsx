@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/group.png";
 import "./Styles.css";
 
-const { Title,Text } = Typography;
+const { Title, Text } = Typography;
 
 function Login() {
   const dispatch = useDispatch();
@@ -27,6 +27,30 @@ function Login() {
   const { loading, token, error } = useSelector((state) => state.auth);
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const VALIDATION_RULES = {
+    email: [
+      { required: true, message: "Email is required" },
+      {
+        pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        message: "Enter a valid email address (e.g. user@gmail.com)",
+      },
+    ],
+    password: [
+      { required: true, message: "Password is required" },
+      { min: 8, message: "Password must be at least 8 characters long" },
+      {
+        pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])/,
+        message:
+          "Password must include uppercase, lowercase, number, and special character",
+      },
+    ],
+  };
+
+  const DEMO_CREDENTIALS = {
+    email: "eve.holt@reqres.in",
+    password: "cityslicka",
+  };
 
   useEffect(() => {
     if (error) {
@@ -49,7 +73,7 @@ function Login() {
     <div className="login-container">
       {contextHolder}
       <div className="login-logo">
-        <Image src={logo} alt="logo" preview={false}/>
+        <Image src={logo} alt="logo" preview={false} />
       </div>
       <Title level={1} className="login-title">
         User Management
@@ -65,20 +89,11 @@ function Login() {
           onFinish={handleSubmit}
           autoComplete="off"
         >
-          <Form.Item
-            name="email"
-            rules={[
-              { type: "email", message: "Enter a valid email" },
-              { required: true, message: "Email is required" },
-            ]}
-          >
+          <Form.Item name="email" rules={VALIDATION_RULES.email}>
             <Input autoFocus prefix={<UserOutlined />} placeholder="Email" />
           </Form.Item>
 
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Password is required" }]}
-          >
+          <Form.Item name="password" rules={VALIDATION_RULES.password}>
             <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
 
@@ -102,15 +117,12 @@ function Login() {
             </Button>
           </Form.Item>
         </Form>
-        <Tag
-          bordered
-          className={"demo-tag"}
-        >
+        <Tag bordered className={"demo-tag"}>
           <Text strong>Demo Credentials</Text>
-          <br/>
-         Email: eve.holt@reqres.in
-          <br/>
-          Password: cityslicka
+          <br />
+          Email: {DEMO_CREDENTIALS.email}
+          <br />
+          Password: {DEMO_CREDENTIALS.password}
         </Tag>
       </Card>
     </div>
