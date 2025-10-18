@@ -1,7 +1,11 @@
 import { Modal, Form, Input } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUserRequest, updateUserRequest } from "../redux/users/userSlice";
+import {
+  createUserRequest,
+  fetchUsersRequest,
+  updateUserRequest,
+} from "../redux/users/userSlice";
 
 function UserModal({ visible, onCancel, user, isEdit }) {
   const [form] = Form.useForm();
@@ -29,8 +33,10 @@ function UserModal({ visible, onCancel, user, isEdit }) {
 
       if (isEdit) {
         dispatch(updateUserRequest({ ...user, ...values }));
+        dispatch(fetchUsersRequest(1));
       } else {
         dispatch(createUserRequest(values));
+        dispatch(fetchUsersRequest(1));
       }
 
       form.resetFields();
@@ -50,7 +56,9 @@ function UserModal({ visible, onCancel, user, isEdit }) {
       return Promise.reject(new Error("Please enter a valid email address!"));
     }
 
-    const createdUsers = JSON.parse(localStorage.getItem("createdUsers") || "[]");
+    const createdUsers = JSON.parse(
+      localStorage.getItem("createdUsers") || "[]"
+    );
     const allUsers = [...createdUsers, ...list];
 
     const duplicateEmail = allUsers.some(
@@ -60,7 +68,9 @@ function UserModal({ visible, onCancel, user, isEdit }) {
     );
 
     if (duplicateEmail) {
-      return Promise.reject(new Error("A user with this email already exists!"));
+      return Promise.reject(
+        new Error("A user with this email already exists!")
+      );
     }
 
     return Promise.resolve();
